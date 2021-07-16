@@ -4,9 +4,9 @@ let H = window.innerHeight;
 
 // Object Constants
 let LAYERS = 5;
-let R = 150;
-let A_RATIO = 0.25;
-let BALL_NUM = 3;
+let R = 310;
+let A_RATIO = 0.2;
+let BALL_NUM = 1;
 
 // Environment Constants
 let g = 0/10;
@@ -24,6 +24,10 @@ function setup() {
         balls[i] = new Ball(random(R, W - R), random(R, H - R), i, 0, [], balls, 0); 
         balls[i].set_children();   
     }
+}
+
+function mouseClicked() {
+    noLoop();
 }
 
 function draw() {

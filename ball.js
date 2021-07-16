@@ -101,12 +101,48 @@ class Ball {
                 this.parents[this.pid].v_y = -this.v_y;
             }
         }
+        for (let i = 0; i < this.children.length; i++) {
+            let D = dist(this.x, this.y, this.children[i].x, this.children[i].y);
+            let L = this.r - this.children[i].r - 0.1;
+            if (D >= L) {
+                let dx = this.x - this.children[i].x;
+                let dy = this.y - this.children[i].y;
+                let sigma = Math.PI - atan2(-dy, dx);
+
+                this.children[i].x = this.x + cos(sigma) * L;
+                this.children[i].y = this.y + sin(sigma) * L;
+                this.x = this.children[i].x + cos(Math.PI + sigma) * L;
+                this.y = this.children[i].y + sin(Math.PI + sigma) * L;
+
+                let R_x = this.v_x + this.children[i].v_x;
+                let R_y = this.v_y + this.children[i].v_y;
+                let theta = atan2(R_y, R_x);
+                let CV = createVector(R_x, R_y);
+                let PV = createVector(R_x, R_y);
+                PV.setHeading(Math.PI + 2* theta);
+                PV.setMag(Math.sqrt(PV.mag()));
+                CV.setMag(Math.sqrt(CV.mag()));
+                this.children[i].v_x = CV.x;
+                this.children[i].v_y = CV.y;
+                CV.rotate(Math.PI);
+                this.v_x = CV.x;
+                this.v_y = CV.y;
+            }
+        }
+        
     }
     show() { 
         if (this.layer < LAYERS) {
             stroke(255);
+            strokeWeight(0.5);
             noFill();
-            ellipse(this.x, this.y, 2*this.r);
+            ellipse(this.x, this.y, 2 * this.r);
+            /* let V = createVector(this.v_x, this.v_y);
+            V.setMag(10*V.mag());
+            strokeWeight(1);
+            line(this.x, this.y, V.x + this.x, V.y + this.y);
+            fill(255);
+            ellipse(V.x + this.x, V.y + this.y, 5); */
             if (this.layer + 1 < LAYERS) {
                 for (let i = 0; i < this.children.length; i++) {
                     this.children[i].collision();
