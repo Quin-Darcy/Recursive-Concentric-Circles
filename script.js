@@ -3,9 +3,9 @@ let W = window.innerWidth;
 let H = window.innerHeight;
 
 // Object Constants
-let LAYERS = 5;
-let R = 310;
-let A_RATIO = 0.2;
+let LAYERS = 4;
+let R = 410;
+let A_RATIO = 0.25;
 let BALL_NUM = 1;
 
 // Environment Constants
