@@ -3,10 +3,10 @@ let W = window.innerWidth;
 let H = window.innerHeight;
 
 // Object Constants
-let LAYERS = 4;
-let R = 410;
-let A_RATIO = 0.25;
+let LAYERS = 5;
+let A_RATIO = 0.3;
 let BALL_NUM = 1;
+let R = Math.sqrt(A_RATIO * W * H / (BALL_NUM * Math.PI));
 
 // Environment Constants
 let g = 0/10;
@@ -31,7 +31,6 @@ function mouseClicked() {
 }
 
 function draw() {
-    frameRate(10);
     background(0);
     for (let i = 0; i < BALL_NUM; i++) {
         balls[i].collision();

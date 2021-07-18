@@ -8,9 +8,14 @@ class Ball {
         this.pid = pid;
         this.siblings = siblings; 
         this.children = [];
-        this.child_num = random(1, 10);
-        this.v_x = random(-2, 2); 
-        this.v_y = random(-2, 2);
+        this.child_num = Math.floor(random(1, 6));
+        if (this.layer === LAYERS - 1) {
+            this.v_x = random(-2, 2); 
+            this.v_y = random(-2, 2);
+        } else {
+            this.v_x = 0;
+            this.v_y = 0;
+        }
         this.area = 0;
         this.r = 0;
         if (this.layer === 0) {
@@ -88,7 +93,7 @@ class Ball {
                 let C2C_ANG = P.heading();
                 let temp = createVector(this.x, this.y);
                 temp.setMag(dist(this.x, this.y, this.children[i].x, this.children[i].y));
-                temp.setHeading(C2C_ANG + Math.PI / 2);
+                temp.setHeading(C2C_ANG);
 
                 // DISPLAY OF THE ABOVE VECTOR
                 //stroke(0, 255, 255);
@@ -165,8 +170,8 @@ class Ball {
                 let V1 = createVector(v1x, v1y);
                 let V2 = createVector(v2x, v2y);
 
-                V1.setMag(Math.log(V1.mag()));
-                V2.setMag(Math.log(V2.mag()));
+                V1.setMag(-Math.log(V1.mag()) * mu);
+                V2.setMag(-Math.log(V2.mag()) * mu);
 
                 // DISPLAY OF THE VECTORS ABOVE
                 //stroke(255, 0, 0);
@@ -196,8 +201,14 @@ class Ball {
     }
     show() { 
         if (this.layer < LAYERS) {
-            stroke(255);
-            strokeWeight(0.5);
+            if (this.layer === 0) {
+                fill(255);
+                //ellipse(this.x, this.y, 1);
+            }
+            colorMode(HSB, 2, 1, 1);
+            let V = createVector(this.v_x, this.v_y);
+            stroke(V.mag(), 1, 1);
+            strokeWeight(Math.sqrt(LAYERS + 1) / (this.layer + 1));
             noFill();
             ellipse(this.x, this.y, 2 * this.r);
             /*let V = createVector(this.v_x, this.v_y);
