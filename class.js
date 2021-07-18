@@ -201,16 +201,19 @@ class Ball {
     }
     show() { 
         if (this.layer < LAYERS) {
-            if (this.layer === 0) {
-                fill(255);
-                //ellipse(this.x, this.y, 1);
+            if (COLOR === 1) {
+                colorMode(HSB, 2, 1, 1);
+                let V = createVector(this.v_x, this.v_y);
+                stroke(V.mag(), 1, 1);
+                strokeWeight(Math.sqrt(LAYERS + 1) / (this.layer + 1));
+                noFill();
+                ellipse(this.x, this.y, 2 * this.r);
+            } else {
+                stroke(255);
+                strokeWeight(Math.sqrt(LAYERS + 1) / (this.layer + 1));
+                noFill();
+                ellipse(this.x, this.y, 2 * this.r);
             }
-            colorMode(HSB, 2, 1, 1);
-            let V = createVector(this.v_x, this.v_y);
-            stroke(V.mag(), 1, 1);
-            strokeWeight(Math.sqrt(LAYERS + 1) / (this.layer + 1));
-            noFill();
-            ellipse(this.x, this.y, 2 * this.r);
             /*let V = createVector(this.v_x, this.v_y);
             V.setMag(10*V.mag());
             strokeWeight(1);
